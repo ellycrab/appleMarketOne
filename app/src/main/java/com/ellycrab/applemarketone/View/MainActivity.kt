@@ -97,7 +97,7 @@ class MainActivity : AppCompatActivity(){
 
     }
 
-    //detail 좋아요결과반영
+    //detail 좋아요결과반영-activityResultLauncher 이용하다 앱이 꺼져서 onActivityResult이용하였으나 구현 안됩니다 ㅠ
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == DETAIL_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
