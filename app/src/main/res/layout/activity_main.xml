@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:background="@color/white"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".View.MainActivity">
+    <LinearLayout
+        android:id="@+id/mainLinear"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:weightSum="4"
+        android:orientation="horizontal"
+        tools:ignore="MissingConstraints">
+        <TextView
+            android:id="@+id/mainSelect"
+            android:layout_weight="0.8"
+            android:layout_width="0dp"
+            android:gravity="center"
+            android:textStyle="bold"
+            android:textSize="15sp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/main_selectTxt"/>
+        <ImageButton
+            android:id="@+id/selectIcon"
+            android:layout_width="0dp"
+            android:backgroundTint="@color/white"
+            android:layout_weight="0.5"
+            android:layout_gravity="center_vertical"
+            android:scaleType="fitCenter"
+            android:layout_height="44dp"
+            android:src="@drawable/downwardarrow2"/>
+        <ImageButton
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2.1"
+            android:backgroundTint="@color/white"
+            android:layout_gravity="center_vertical"/>
+
+        <ImageButton
+            android:id="@+id/notification"
+            android:layout_marginEnd="10dp"
+            android:layout_width="0dp"
+            android:layout_height="60dp"
+            android:layout_weight="0.5"
+            android:layout_gravity="center_vertical"
+            android:scaleType="fitCenter"
+            android:backgroundTint="@color/white"
+            android:src="@drawable/notification"/>
+
+    </LinearLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/mainRv"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="70dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/mainLinear" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/floatbtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginRight="10dp"
+        android:backgroundTint="@color/white"
+        android:visibility="gone"
+        android:src="@drawable/floatbtn"
+        tools:ignore="MissingConstraints" />
+</androidx.constraintlayout.widget.ConstraintLayout>

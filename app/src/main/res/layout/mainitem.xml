@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/white"
+    android:layout_width="match_parent"
+    android:padding="20dp"
+    android:layout_height="188dp">
+
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        app:cardCornerRadius="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/imgIcon"
+            android:layout_width="140dp"
+            android:layout_height="140dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/sample1" />
+
+    </androidx.cardview.widget.CardView>
+
+
+    <TextView
+        android:id="@+id/imgTitle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:text="@string/sample1_title"
+        android:scrollHorizontally="true"
+        android:maxLines="2"
+        android:ellipsize="end"
+        app:layout_constraintStart_toEndOf="@+id/cardView"
+        app:layout_constraintTop_toTopOf="@+id/cardView"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <TextView
+        android:id="@+id/addressmain"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="@string/sample1_address"
+        app:layout_constraintStart_toStartOf="@+id/imgTitle"
+        app:layout_constraintTop_toBottomOf="@+id/imgTitle" />
+
+    <TextView
+        android:id="@+id/price"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="@string/sample1_price"
+        app:layout_constraintStart_toStartOf="@+id/addressmain"
+        app:layout_constraintTop_toBottomOf="@+id/addressmain" />
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="150dp"
+        android:layout_height="37dp"
+        android:layout_marginEnd="30dp"
+        android:orientation="horizontal"
+        android:weightSum="10"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/price"
+        app:layout_constraintTop_toBottomOf="@+id/price">
+
+        <ImageButton
+            android:id="@+id/comment"
+            android:layout_width="0dp"
+            android:layout_height="45dp"
+            android:layout_weight="3"
+            android:backgroundTint="@color/white"
+            android:scaleType="fitCenter"
+            android:src="@drawable/bubble" />
+
+        <TextView
+            android:id="@+id/commentCnt"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_weight="1.5"
+            android:backgroundTint="@color/white"
+            android:gravity="center"
+            android:scaleType="fitCenter"
+            android:text="@string/sample1_chatting" />
+
+        <ImageButton
+            android:id="@+id/noting"
+            android:layout_width="0dp"
+            android:layout_height="45dp"
+            android:layout_weight="1"
+            android:backgroundTint="@color/white"
+            android:scaleType="fitCenter"
+            android:src="@drawable/bubble" />
+
+        <ImageButton
+            android:id="@+id/like"
+            android:layout_width="0dp"
+            android:layout_height="45dp"
+            android:layout_weight="3"
+            android:backgroundTint="@color/white"
+            android:scaleType="fitCenter"
+            android:src="@drawable/emptylike" />
+
+        <TextView
+            android:id="@+id/likeCnt"
+            android:layout_width="23dp"
+            android:layout_height="45dp"
+            android:layout_weight="1.5"
+            android:backgroundTint="@color/white"
+            android:gravity="center"
+            android:scaleType="fitCenter"
+            android:text="@string/sample1_like" />
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
