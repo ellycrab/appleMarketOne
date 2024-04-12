@@ -118,7 +118,12 @@ class DetailActivity : AppCompatActivity() {
     }
     override fun onBackPressed() {
         super.onBackPressed()
-        exit()
+        if (liked) {
+            exit()
+
+        } else {
+           finish()
+        }
     }
 
 }
