@@ -32,7 +32,7 @@ class MainActivity : AppCompatActivity(){
     lateinit var dataAllList: Array<DataAll>
 
     //좋아요 콜백함수 초기화
-    lateinit var activityResultLauncher: ActivityResultLauncher<Intent>
+    //lateinit var activityResultLauncher: ActivityResultLauncher<Intent>
 
     // 어댑터 초기화
     private lateinit var rvBoardAdapter: MainAdapter
@@ -48,8 +48,6 @@ class MainActivity : AppCompatActivity(){
         // 리싸이클러뷰 설정
         setupRecyclerView()
 
-
-        rvBoardAdapter = MainAdapter(baseContext, MainList)
 
         // 메인 게시물 데이터 삽입
         addWritingsData()
@@ -187,8 +185,10 @@ class MainActivity : AppCompatActivity(){
     private fun setupRecyclerView(){
 
         val recyclerBoardContent = binding.mainRv
-        val rvBoardAdapter = MainAdapter(baseContext,MainList)
+        rvBoardAdapter = MainAdapter(baseContext,MainList)
 
+        recyclerBoardContent.adapter = rvBoardAdapter
+        recyclerBoardContent.layoutManager = LinearLayoutManager(this)
 
         rvBoardAdapter.setItemClickListener(object :MainAdapter.ItemClickListener{
             override fun onItemClick(position: Int) {
@@ -356,10 +356,7 @@ class MainActivity : AppCompatActivity(){
 
 
         })
-
-        recyclerBoardContent.adapter = rvBoardAdapter
-        recyclerBoardContent.layoutManager = LinearLayoutManager(this)
-
+        
     }
 
 
