@@ -72,9 +72,10 @@ class DetailActivity : AppCompatActivity() {
 
                 val returnIntent = Intent()
                 returnIntent.putExtra("updatedLikeStatus", true)
-                returnIntent.putExtra("likeCountChange", 1)
+                returnIntent.putExtra("likeCountChange", -1)
+                returnIntent.putExtra("position", position)
                 setResult(Activity.RESULT_OK, returnIntent)
-                Log.d("resultok","$returnIntent")
+
             } else {
                 binding.likeBtn.setImageResource(R.drawable.emptylike)
                 liked = false
@@ -82,7 +83,8 @@ class DetailActivity : AppCompatActivity() {
 
                 val returnIntent = Intent()
                 returnIntent.putExtra("updatedLikeStatus", false)
-                returnIntent.putExtra("likeCountChange", -1)
+                returnIntent.putExtra("likeCountChange", 1)
+                returnIntent.putExtra("position", position)
                 setResult(Activity.RESULT_OK, returnIntent)
             }
         }

@@ -51,6 +51,7 @@ class MainAdapter(val context: Context, val MainList: MutableList<DataAll>) :
 
         }
 
+
     }
 
     inner class Holder(val binding: MainitemBinding) : RecyclerView.ViewHolder(binding.root) {
@@ -67,8 +68,10 @@ class MainAdapter(val context: Context, val MainList: MutableList<DataAll>) :
                 val formattedPrice = formatter.format(dataAll.price.toInt())
                 price.text = formattedPrice
                 commentCnt.text = dataAll.commentCnt
-                likeCnt.text = dataAll.likeCnt
 
+
+                val formattedLikeCnt = formatter.format(dataAll.likeCnt.toInt())
+                likeCnt.text = formattedLikeCnt
 
             }
         }

@@ -32,7 +32,7 @@ class MainActivity : AppCompatActivity(){
     lateinit var dataAllList: Array<DataAll>
 
     //좋아요 콜백함수 초기화
-    lateinit var activityResultLauncher: ActivityResultLauncher<Intent>
+    //lateinit var activityResultLauncher: ActivityResultLauncher<Intent>
 
     // 어댑터 초기화
     private lateinit var rvBoardAdapter: MainAdapter
@@ -48,8 +48,6 @@ class MainActivity : AppCompatActivity(){
         // 리싸이클러뷰 설정
         setupRecyclerView()
 
-
-        rvBoardAdapter = MainAdapter(baseContext, MainList)
 
         // 메인 게시물 데이터 삽입
         addWritingsData()
@@ -102,18 +100,23 @@ class MainActivity : AppCompatActivity(){
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == DETAIL_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
             val updatedLikeStatus = data?.getBooleanExtra("updatedLikeStatus", false) ?: false
-            val likeCountChange = data?.getIntExtra("likeCountChange", 0) ?: 0
+            val likeCountChange = data?.getIntExtra("likeCountChange", 1) ?: 0
+            val position = data?.getIntExtra("position", -1) ?: -1
 
 
 
             MainList.forEach { item ->
                 item.apply {
-
                     this.isLiked = updatedLikeStatus
-                    this.likeCnt += likeCountChange
 
+                    val currentLikeCount = this.likeCnt.toInt()
+                    val newLikeCount =
+                        if (updatedLikeStatus) currentLikeCount - likeCountChange
+                        else currentLikeCount + likeCountChange
+                    this.likeCnt = newLikeCount.toString()
                 }
             }
+
 
             rvBoardAdapter.notifyDataSetChanged()
 
@@ -187,8 +190,10 @@ class MainActivity : AppCompatActivity(){
     private fun setupRecyclerView(){
 
         val recyclerBoardContent = binding.mainRv
-        val rvBoardAdapter = MainAdapter(baseContext,MainList)
+        rvBoardAdapter = MainAdapter(baseContext,MainList)
 
+        recyclerBoardContent.adapter = rvBoardAdapter
+        recyclerBoardContent.layoutManager = LinearLayoutManager(this)
 
         rvBoardAdapter.setItemClickListener(object :MainAdapter.ItemClickListener{
             override fun onItemClick(position: Int) {
@@ -356,9 +361,6 @@ class MainActivity : AppCompatActivity(){
 
 
         })
-
-        recyclerBoardContent.adapter = rvBoardAdapter
-        recyclerBoardContent.layoutManager = LinearLayoutManager(this)
 
     }
 
