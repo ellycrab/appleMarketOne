@@ -11,9 +11,8 @@ data class DataAll(
     var seller:String,
     var price:String,
     var addressmain:String,
-    var likeCnt:String,
-    var commentCnt:String,
+    var likeCnt:Int,
+    var commentCnt:Int,
     var isLiked:Boolean,
-    var likeIcon:Int
 
 ) : Parcelable

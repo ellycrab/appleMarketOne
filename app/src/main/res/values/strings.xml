@@ -2,6 +2,8 @@
     <string name="app_name">applemarketOne</string>
 
     <string name="main_selectTxt">내배캠동</string>
+    <string name="main_selectTxt2">당근동</string>
+    <string name="main_selectTxt3">사과동</string>
     <!--상품명-->
 
     <string name="sample1_title">산진 한달된 선풍기 팝니다</string>
