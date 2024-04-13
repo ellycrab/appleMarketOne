@@ -8,71 +8,89 @@ import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.RecyclerView
 import com.ellycrab.applemarketone.R
 import com.ellycrab.applemarketone.databinding.MainitemBinding
+
 import com.ellycrab.applemarketone.model.DataAll
 import java.text.DecimalFormat
+import java.text.NumberFormat
+import java.util.Locale
 
-class MainAdapter(val context: Context, val MainList: MutableList<DataAll>) :
+class MainAdapter(val MainList: MutableList<DataAll>) :
     RecyclerView.Adapter<MainAdapter.Holder>() {
+
+
+    interface ItemClickListener{
+        fun onItemClick(view:View,position: Int)
+    }
+
+    interface LongItemClick{
+        fun onItemLongClick(view:View,position: Int)
+    }
+
+    var itemClick:ItemClickListener? = null
+    var longItemClick:LongItemClick? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
         val binding = MainitemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return Holder(binding)
     }
 
-    interface ItemClickListener {
-        fun onItemClick(position: Int)
 
 
-
-        fun onItemLongClick(view: View, position: Int) // 롱클릭 함수 추가
-    }
-
-
-    private var itemClick: ItemClickListener? = null
-
-    fun setItemClickListener(listener: ItemClickListener) {
-        this.itemClick = listener
-    }
 
     override fun getItemCount(): Int = MainList.size
 
+    override fun getItemId(position: Int): Long {
+        return position.toLong()
+    }
+
     override fun onBindViewHolder(holder: Holder, position: Int) {
-        holder.bind(MainList[position])
-
-        holder.itemView.setOnLongClickListener { // 아이템 롱클릭 했을 때
-            itemClick?.onItemLongClick(it, position)
-            return@setOnLongClickListener (false) // 직후 click event 를 받기 위해 false 반환
-        }
-
 
         holder.itemView.setOnClickListener {
-            itemClick?.onItemClick(position)
-
-
+            itemClick?.onItemClick(it,position)
         }
+        holder.imgIcon.setImageResource(MainList[position].imgIcon)
+        holder.imgTitle.text = MainList[position].imgTitle
+        holder.address.text = MainList[position].addressmain
 
+
+        val priceString = MainList[position].price
+        val price = priceString.toInt()
+        val formattedPrice = NumberFormat.getNumberInstance(Locale.getDefault())
+            .format(price)
+        holder.price.text = "$formattedPrice 원"
+
+
+        holder.chatCnt.text = MainList[position].commentCnt.toString()
+        holder.likeCnt.text = MainList[position].likeCnt.toString()
+
+        if(MainList[position].isLiked){
+            holder.likeIcon.setImageResource(R.drawable.occypiedlike)
+        }else{
+            holder.likeIcon.setImageResource(R.drawable.emptylike)
+        }
 
     }
 
+
+
     inner class Holder(val binding: MainitemBinding) : RecyclerView.ViewHolder(binding.root) {
+        val imgIcon = binding.imgIcon
+        val imgTitle = binding.imgTitle
+        val address = binding.addressmain
+        val price = binding.price
+        val chatCnt = binding.commentCnt
+        val likeCnt = binding.likeCnt
+        val likeIcon = binding.like
 
-
-
-        fun bind(dataAll: DataAll) {
-            binding.apply {
-                imgIcon.setImageResource(dataAll.imgIcon)
-                imgTitle.text = dataAll.imgTitle
-                addressmain.text = dataAll.addressmain
-
-                val formatter = DecimalFormat("#,###")
-                val formattedPrice = formatter.format(dataAll.price.toInt())
-                price.text = formattedPrice
-                commentCnt.text = dataAll.commentCnt
-
-
-                val formattedLikeCnt = formatter.format(dataAll.likeCnt.toInt())
-                likeCnt.text = formattedLikeCnt
-
+        init {
+            binding.root.setOnLongClickListener {
+                val position = adapterPosition
+                if (position != RecyclerView.NO_POSITION) {
+                    longItemClick?.onItemLongClick(it, position)
+                    true
+                } else {
+                    false
+                }
             }
         }
     }

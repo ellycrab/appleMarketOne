@@ -71,7 +71,7 @@ class DetailActivity : AppCompatActivity() {
 
 
                 val returnIntent = Intent()
-                returnIntent.putExtra("updatedLikeStatus", true)
+                returnIntent.putExtra("updatedLikeStatus", false)
                 returnIntent.putExtra("likeCountChange", -1)
                 returnIntent.putExtra("position", position)
                 setResult(Activity.RESULT_OK, returnIntent)
