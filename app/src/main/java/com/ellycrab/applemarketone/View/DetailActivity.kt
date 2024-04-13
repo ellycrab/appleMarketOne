@@ -47,7 +47,7 @@ class DetailActivity : AppCompatActivity() {
 
         // 가격을 콤마(,)로 형식화하여 설정
         val formattedPrice = NumberFormat.getNumberInstance(Locale.getDefault()).format(dataAll!!.price.toInt())
-        binding.detailPrice.text = formattedPrice
+        binding.detailPrice.text = "$formattedPrice 원"
 
 
         val remainData = arrayOf(dataAll.imgIcon,
