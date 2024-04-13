@@ -28,7 +28,7 @@ import com.ellycrab.applemarketone.utils.NotificationUtils.notification
 class MainActivity : AppCompatActivity(){
 
 
-    private val DETAIL_REQUEST_CODE = 100
+
 
     //데이터 원본 준비-메인 게시물데이터를 담을 리스트 초기화
     private var MainList = mutableListOf<DataAll>()
@@ -79,17 +79,20 @@ class MainActivity : AppCompatActivity(){
             notification(this)
         }
 
-        activityResultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
-            if(it.resultCode == RESULT_OK){
-                val likePosition = it.data?.getIntExtra("likePosition",0) as Int
-                val isLiked = it.data?.getBooleanExtra("isLiked",false) as Boolean
-                if(isLiked){
+        activityResultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.resultCode == RESULT_OK) {
+                val likePosition = result.data?.getIntExtra("likePosition", 0) ?: 0
+                val isLiked = result.data?.getBooleanExtra("isLiked", false) ?: false
+
+                if (isLiked) {
                     MainList[likePosition].isLiked = true
                     MainList[likePosition].likeCnt += 1
-                }else{
-                    if(MainList[likePosition].isLiked){
+                    Log.d("isLikedtrue", "$isLiked")
+                } else {
+                    if (MainList[likePosition].isLiked) {
                         MainList[likePosition].isLiked = false
                         MainList[likePosition].likeCnt -= 1
+                        Log.d("isLikedfalse", "$isLiked")
                     }
                 }
                 rvBoardAdapter.notifyItemChanged(likePosition)

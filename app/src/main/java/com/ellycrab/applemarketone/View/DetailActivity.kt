@@ -22,6 +22,7 @@ class DetailActivity : AppCompatActivity() {
 
     //좋아요 상태 추적
     private var isLiked: Boolean = false
+    private var likePosition:Int = 0
 
 
     private val binding by lazy { ActivityDetailBinding.inflate(layoutInflater) }
@@ -33,6 +34,7 @@ class DetailActivity : AppCompatActivity() {
 
 
         val dataAll = intent.getParcelableExtra<DataAll>("myItem")
+        likePosition = intent.getIntExtra("likePosition",0)
 
         dataAll?.let {
             isLiked = it.isLiked == true
@@ -45,14 +47,16 @@ class DetailActivity : AppCompatActivity() {
                     }
                 )
             binding.likeBtn.setOnClickListener {
-                if(!isLiked){
+                if(!isLiked){//isLiked가 false(안눌렸을때 누르는 경우)
                     binding.likeBtn.setImageResource(R.drawable.occypiedlike)
                     Snackbar.make(binding.root,"관심 목록에 추가",Snackbar.LENGTH_SHORT).show()
                     isLiked=true
-                }else{
+                }else{//isLiked가 true(눌렸을때 해제하는 경우)
                     binding.likeBtn.setImageResource(R.drawable.emptylike)
-                    isLiked=true
+                    isLiked=false
                 }
+
+                sendLikeStateToMainActivity()
             }
         }
 
@@ -77,6 +81,14 @@ class DetailActivity : AppCompatActivity() {
 
     }
 
+    private fun sendLikeStateToMainActivity() {
+        val intent = Intent().apply {
+            putExtra("likePosition", likePosition)
+            putExtra("isLiked", isLiked)
+        }
+        setResult(Activity.RESULT_OK, intent)
+    }
+
 
     private fun setFragment(remainData: Array<Any>) {
         val fragment = detailFragment(remainData).apply {
@@ -92,19 +104,14 @@ class DetailActivity : AppCompatActivity() {
         }
     }
 
-    private fun exit() {
-        val likePosition = intent.getIntExtra("likePosition", 0)
-        val intent = Intent(this, MainActivity::class.java).apply {
-            putExtra("likePosition", likePosition)
-            putExtra("isLiked", isLiked)
-        }
-        setResult(RESULT_OK, intent)
-        if (!isFinishing) finish()
-    }
-
     override fun onBackPressed() {
         super.onBackPressed()
         exit()
+    }
+
+    private fun exit() {
+        sendLikeStateToMainActivity()
+        if (!isFinishing) finish()
     }
 
 }
