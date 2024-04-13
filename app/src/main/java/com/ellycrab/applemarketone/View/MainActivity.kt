@@ -28,6 +28,7 @@ import com.ellycrab.applemarketone.utils.NotificationUtils.notification
 class MainActivity : AppCompatActivity(){
 
 
+    private val DETAIL_REQUEST_CODE = 100
 
     //데이터 원본 준비-메인 게시물데이터를 담을 리스트 초기화
     private var MainList = mutableListOf<DataAll>()
@@ -77,6 +78,24 @@ class MainActivity : AppCompatActivity(){
         binding.notification.setOnClickListener {
             notification(this)
         }
+
+        activityResultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
+            if(it.resultCode == RESULT_OK){
+                val likePosition = it.data?.getIntExtra("likePosition",0) as Int
+                val isLiked = it.data?.getBooleanExtra("isLiked",false) as Boolean
+                if(isLiked){
+                    MainList[likePosition].isLiked = true
+                    MainList[likePosition].likeCnt += 1
+                }else{
+                    if(MainList[likePosition].isLiked){
+                        MainList[likePosition].isLiked = false
+                        MainList[likePosition].likeCnt -= 1
+                    }
+                }
+                rvBoardAdapter.notifyItemChanged(likePosition)
+            }
+        }
+
         //플로팅버튼 클릭시
         binding.mainRv.addOnScrollListener(object:RecyclerView.OnScrollListener(){
             override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
@@ -104,6 +123,7 @@ class MainActivity : AppCompatActivity(){
 
 
     }
+
 
 
     fun addWritingsData(){
@@ -204,8 +224,12 @@ class MainActivity : AppCompatActivity(){
         rvBoardAdapter.itemClick = object :MainAdapter.ItemClickListener{
             override fun onItemClick(view: View, position: Int) {
                 //디테일페이지로 모든 데이터 넘기기
-                openDetail(MainList[position])
 
+                val clickedItem = MainList[position]
+                val intent = Intent(this@MainActivity, DetailActivity::class.java)
+                intent.putExtra("likePosition", position)
+                intent.putExtra("myItem", clickedItem)
+                activityResultLauncher.launch(intent)
 
             }
         }
@@ -237,14 +261,7 @@ class MainActivity : AppCompatActivity(){
 
 
 
-    //디테일내 하단 가격바에만 적용되는 함수
-    private fun openDetail(dataAll: DataAll) {
 
-        val intent = Intent(this@MainActivity, DetailActivity::class.java)
-        intent.putExtra("datafromMain", dataAll)
-      //  startActivityForResult(intent, DETAIL_REQUEST_CODE)
-        startActivity(intent)
-    }
 
 
 

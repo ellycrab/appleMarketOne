@@ -36,13 +36,6 @@ class MainAdapter(val MainList: MutableList<DataAll>) :
 
 
 
-
-    override fun getItemCount(): Int = MainList.size
-
-    override fun getItemId(position: Int): Long {
-        return position.toLong()
-    }
-
     override fun onBindViewHolder(holder: Holder, position: Int) {
 
         holder.itemView.setOnClickListener {
@@ -72,8 +65,13 @@ class MainAdapter(val MainList: MutableList<DataAll>) :
     }
 
 
+    override fun getItemCount(): Int = MainList.size
 
-    inner class Holder(val binding: MainitemBinding) : RecyclerView.ViewHolder(binding.root) {
+    override fun getItemId(position: Int): Long {
+        return position.toLong()
+    }
+
+    inner class Holder(private val binding: MainitemBinding) : RecyclerView.ViewHolder(binding.root) {
         val imgIcon = binding.imgIcon
         val imgTitle = binding.imgTitle
         val address = binding.addressmain
@@ -83,6 +81,13 @@ class MainAdapter(val MainList: MutableList<DataAll>) :
         val likeIcon = binding.like
 
         init {
+
+            binding.root.setOnClickListener {
+                val position = adapterPosition
+                if(position != RecyclerView.NO_POSITION){
+                    itemClick?.onItemClick(it,position)
+                }
+            }
             binding.root.setOnLongClickListener {
                 val position = adapterPosition
                 if (position != RecyclerView.NO_POSITION) {
